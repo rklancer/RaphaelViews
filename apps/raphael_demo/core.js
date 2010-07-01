@@ -6,7 +6,7 @@
 
 /** @namespace
 
-  My cool new app.  Describe your application.
+  A demo app for the RaphaelViews framework.
   
   @extends SC.Object
 */
