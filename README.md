@@ -1,7 +1,8 @@
 =============================================================================
 
 Project:   RaphaelViews
-Copyright: ©2010 Richard Klancer
+Copyright: ©2010 Richard Klancer and Concord Consortium
+Licensed under the MIT license. See file 'license.js'
 
 =============================================================================
 
