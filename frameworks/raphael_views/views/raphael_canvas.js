@@ -2,7 +2,7 @@
 // Project:   RaphaelViews.RaphaelCanvasView
 // Copyright: ©2010 Richard Klancer and Concord Consortium
 // ==========================================================================
-/*globals RaphaelViews Raphael*/
+/*globals RaphaelViews Raphael */
 
 /** @class
 

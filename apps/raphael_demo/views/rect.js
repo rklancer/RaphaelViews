@@ -28,7 +28,7 @@ RaphaelDemo.RectView = RaphaelViews.RaphaelView.extend(
       this.renderChildViews(context, firstTime);      // don't forget to render child views
     }
     else {
-      var rect = this.get('raphael');
+      var rect = this.get('raphaelObject');
       rect.attr({ x: this.get('x'), y: this.get('y'), width: this.get('width'), height: this.get('height'), 
         fill: this.get('fill'), stroke: this.get('stroke') });
     }

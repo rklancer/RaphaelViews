@@ -37,6 +37,7 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     return this;
   },
   
+
   begin: function() {
     var ret = RaphaelViews.RaphaelContext(this);
     this.children.push(ret);
@@ -44,9 +45,11 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     return ret;
   },
   
+  
   end: function () {
     return this.prevObject || this;
   },
+ 
   
   // For now the only way for render method to draw a graph is to pass a callback that calls the raphael methods itself. 
   // Eventually I'll probably add methods to RaphaelContext with the same names as Raphael methods
@@ -60,15 +63,18 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     return this;
   },
 
+
   id: function (id) {
     this._id = id;
     return this;
   },
   
-  // TODO fix naming confusion between raphael 'paper' and raphael objects returned by shape methods
-  populateCanvas: function (raphael) {
+  
+  populateCanvas: function (raphaelCanvas) {
+
     // given a raphael canvas, actually call the callbacks that will create dom nodes using raphael.
-    // use our own special sauce here to insert grouping nodes with the appropriate layer ids whenever a view has child views
+    // use our own special sauce here to insert grouping nodes with the appropriate layer ids whenever a view has 
+    // child views
     
     var raphaelObjects = [],
         childNode,
@@ -76,12 +82,12 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
         layerNode;
     
     if (this._callback) {
-      var raphaelObj = this._callback.apply(this._thisArg, [raphael].concat(this._arguments));
+      var raphaelObj = this._callback.apply(this._thisArg, [raphaelCanvas].concat(this._arguments));
       raphaelObjects = this.flattenRaphaelSets(raphaelObj);
     }
     
     for (var i = 0, ii = this.children.length; i < ii; i++) {
-      childNode = this.children[i].populateCanvas(raphael);
+      childNode = this.children[i].populateCanvas(raphaelCanvas);
       if (childNode) childNodes.push(childNode);
     }
 
@@ -93,7 +99,7 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     }
     else if(!this.isTopLevel) {
       // except for the top level context, each raphaeLContext corresponds to one view instance and must get a DOM node
-      layerNode = this.wrap( raphaelObjects.map( this.nodeForRaphaelObject ).concat(childNodes), raphael);
+      layerNode = this.wrap( raphaelObjects.map( this.nodeForRaphaelObject ).concat(childNodes), raphaelCanvas);
     }
 
     if (layerNode) {
@@ -106,10 +112,12 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     return layerNode;
   },
   
-  wrap: function (nodes, raphael) {
+  
+  wrap: function (nodes, raphaelCanvas) {
 
     // see http://smartgraph-demos.dev.concord.org/test-raphael-group.html
-    var wrapper = raphael.constructor.vml ?
+    
+    var wrapper = raphaelCanvas.constructor.vml ?
       document.createElement("group") :
       document.createElementNS("http://www.w3.org/2000/svg", "g");
     
@@ -123,7 +131,8 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     }
     return $wrapper[0];
   },
-   
+
+
   flattenRaphaelSets: function (raphaelObj) {
     // convert nested Raphael sets into a flattened list of Raphael shape objects
 
@@ -138,6 +147,7 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
       return [raphaelObj];
     }
   },
+  
   
   nodeForRaphaelObject: function (raphaelObj) {
     var groupNode;
