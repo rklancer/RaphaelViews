@@ -11,6 +11,11 @@
 */
 RaphaelViews.RenderSupport = {
 
+  // default behavior that we can override
+  render: function (context, firstTime) {
+    if (firstTime) this.renderChildViews(context, firstTime);
+  },
+
   createLayer: function () {
     if (this.get('layer')) return;          // move along, nothing to do here
 

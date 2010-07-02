@@ -33,6 +33,7 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     this.prevObject = prevContext;
     this.isTopLevel = !prevContext;
     this.children = [];
+    this._groupNode = NO;
 
     return this;
   },
@@ -62,8 +63,8 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
         
     return this;
   },
-
-
+  
+  
   id: function (id) {
     this._id = id;
     return this;
@@ -79,27 +80,41 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     var raphaelObjects = [],
         childNode,
         childNodes = [],
-        layerNode;
-    
+        layerNode,
+        layerNodes = [],
+        raphaelObj,
+        groupNode;
+
+    // generate node or set of nodes from the Raphael object returned by the render callback, if any
     if (this._callback) {
-      var raphaelObj = this._callback.apply(this._thisArg, [raphaelCanvas].concat(this._arguments));
+      raphaelObj = this._callback.apply(this._thisArg, [raphaelCanvas].concat(this._arguments));
       raphaelObjects = this.flattenRaphaelSets(raphaelObj);
+      layerNodes = layerNodes.concat(raphaelObjects.map( this.nodeForRaphaelObject ));
     }
     
+    // recursively populateCanvas in child contexts
     for (var i = 0, ii = this.children.length; i < ii; i++) {
       childNode = this.children[i].populateCanvas(raphaelCanvas);
       if (childNode) childNodes.push(childNode);
     }
 
-    if (raphaelObjects.length === 0 && childNodes.length === 0) {
-      return null;
+    // generate a group node at least if there are no child contexts and no Raphael objects created in this context
+    if (layerNodes.length === 0 && childNodes.length === 0) {
+      groupNode = this.generateGroupNode(raphaelCanvas);
+      SC.$(raphaelCanvas.paper).append(SC.$(groupNode));
+      layerNodes.push(groupNode);
     }
-    if (raphaelObjects.length === 1 && childNodes.length === 0) {
-      layerNode = this.nodeForRaphaelObject(raphaelObjects[0]);
+    
+    // if this view itself has just one node, that's the layer node
+    if (layerNodes.length === 1 && childNodes.length === 0) {
+      layerNode = layerNodes[0];
     }
     else if(!this.isTopLevel) {
-      // except for the top level context, each raphaeLContext corresponds to one view instance and must get a DOM node
-      layerNode = this.wrap( raphaelObjects.map( this.nodeForRaphaelObject ).concat(childNodes), raphaelCanvas);
+      // If we have multiple nodes, wrap them in a group node, because we must assign a single node to be the view's
+      // layer.
+      // Skip this step if we're in the top-level context (i.e., the one corresponding to the RaphaelCanvasView)
+      // because the RaphaelCanvasView's layer already exists, and is a <div> containing the <svg> node (or VML nodes)
+      layerNode = this.wrap( layerNodes.concat(childNodes), raphaelCanvas);
     }
 
     if (layerNode) {
@@ -113,14 +128,17 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
   },
   
   
-  wrap: function (nodes, raphaelCanvas) {
-
-    // see http://smartgraph-demos.dev.concord.org/test-raphael-group.html
-    
-    var wrapper = raphaelCanvas.constructor.vml ?
+  generateGroupNode: function (raphaelCanvas) {
+    return raphaelCanvas.constructor.vml ?
       document.createElement("group") :
       document.createElementNS("http://www.w3.org/2000/svg", "g");
-    
+  },
+  
+  
+  wrap: function (nodes, raphaelCanvas) {
+    // see http://smartgraph-demos.dev.concord.org/test-raphael-group.html
+
+    var wrapper = this.generateGroupNode(raphaelCanvas);
     var $wrapper = SC.$(wrapper);
 
     // we know nodes.length > 0 or we wouldn't have been called.
