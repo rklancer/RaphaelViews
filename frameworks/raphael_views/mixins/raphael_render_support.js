@@ -110,7 +110,11 @@ RaphaelViews.RenderSupport = {
 
   prepareRaphaelContext: function (raphaelContext, firstTime) {
     raphaelContext.id(this.get('layerId'));
+
+    this.beginPropertyChanges();
+    this.set('layerNeedsUpdate', NO);
     this.render(raphaelContext, firstTime);
+    this.endPropertyChanges();
   },
 
 
