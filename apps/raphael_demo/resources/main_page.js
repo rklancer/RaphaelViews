@@ -30,7 +30,8 @@ RaphaelDemo.mainPage = SC.Page.design({
         
         scatterView: RaphaelViews.RaphaelCollectionView.design({
           exampleView: RaphaelDemo.DataPointView,
-          contentBinding: 'RaphaelDemo.pairsController'
+          contentBinding: 'RaphaelDemo.pairsController',
+          useFastPath: YES
         })
       })
     })
