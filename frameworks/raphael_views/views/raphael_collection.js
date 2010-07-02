@@ -16,18 +16,31 @@ RaphaelViews.RaphaelCollectionView = SC.CollectionView.extend(
 /** @scope RaphaelViews.RaphaelView.prototype */ {
 
   renderCallback: function (raphaelCanvas) {
-    return raphaelCanvas.rect(0, 0, 0, 0);      // we need to generate a layer of some kind...
+    return raphaelCanvas.rect(0, 0, 0, 0);      // TODO context should provide a groupElem() method
   },
   
   render: function (context, firstTime) {
     if (firstTime) {
       context.callback(this, this.renderCallback);
+      this.renderChildViews(context, firstTime) ;
     }
   },
   
+  
+  reloadIfNeeded: function () {
+    console.log('RaphaelCollectionView reloadIfNeeded()');
+    console.log('content.length: ', this.getPath('content.length'));
+    sc_super();
+  },
+  
 
-
-
+  replaceChild: function () {
+    console.log('replaceChild');
+    sc_super();
+  },
+  
+  
+  
 
   //// **** STUFF COPIED FROM RaphaelView BELOW. Anything below that works can be factored into a mixin that we apply
   //// to both RaphaelView and RaphaelCollectionView. If anything needs to be modified, move it above this line
@@ -39,6 +52,7 @@ RaphaelViews.RaphaelCollectionView = SC.CollectionView.extend(
 
   
   createLayer: function () {
+    console.log('RaphaelCollectionView createLayer()');
     if (this.get('layer')) return;          // move along, nothing to do here
 
     var raphaelContext = RaphaelViews.RaphaelContext();
@@ -104,6 +118,23 @@ RaphaelViews.RaphaelCollectionView = SC.CollectionView.extend(
   prepareRaphaelContext: function (raphaelContext, firstTime) {
     raphaelContext.id(this.get('layerId'));
     this.render(raphaelContext, firstTime);
+  },
+  
+  renderChildViews: function (context, firstTime) {
+    console.log('RaphaelCollectionView renderChildViews()');
+    var cv = this.get('childViews');
+    var view;
+
+    for (var i=0, ii=cv.length; i<ii; ++i) {
+      view = cv[i];
+      if (!view) continue;
+
+      context = context.begin();
+      view.prepareRaphaelContext(context, firstTime);
+      context = context.end();
+    }
+
+    return context;
   }
 
 });
