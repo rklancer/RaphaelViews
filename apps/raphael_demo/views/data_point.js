@@ -22,6 +22,7 @@ RaphaelDemo.DataPointView = RaphaelViews.RaphaelView.extend(
   isEnabled: YES,
   selectedFill: '#0000aa',
   selectedStroke: '#0000aa',
+  layerIsCacheable: YES,            // this is apparently required for the CollectionFastPath mixin to work properly
   
   renderCallback: function (raphaelCanvas, x, y, radius, fill, stroke) {
     return raphaelCanvas.circle(x, y, radius).attr({ fill: fill, stroke: stroke });
@@ -31,7 +32,6 @@ RaphaelDemo.DataPointView = RaphaelViews.RaphaelView.extend(
     console.log('DataPointView render(), firstTime = ', firstTime);
     
     var isSelected = this.get('isSelected');
-    
     var fill = isSelected ?  this.get('selectedFill') : this.get('fill');
     var stroke = isSelected ? this.get('selectedStroke') : this.get('stroke');
     
