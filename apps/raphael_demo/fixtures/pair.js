@@ -9,8 +9,18 @@ sc_require('models/pair');
 RaphaelDemo.Pair.FIXTURES = [
 
   { guid: 1,
+    x: 90,
+    y: 90
+  },
+  
+  { guid: 2,
     x: 100,
-    y: 100
+    y: 110
+  },
+  
+  { guid: 3,
+    x: 110,
+    y: 90
   }
 
 ];

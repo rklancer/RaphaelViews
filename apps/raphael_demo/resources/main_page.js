@@ -26,14 +26,11 @@ RaphaelDemo.mainPage = SC.Page.design({
         fill: '#aa0000',
         stroke: '#aa0000',
         
-        childViews: 'pointView'.w(),
+        childViews: 'scatterView'.w(),
         
-        pointView: RaphaelDemo.DataPointView.design({
-          contentBinding: 'RaphaelDemo.pairsController.firstPair',
-
-          mouseDown: function () {
-            alert("Thank you for clicking.");
-          }
+        scatterView: RaphaelViews.RaphaelCollectionView.design({
+          exampleView: RaphaelDemo.DataPointView,
+          contentBinding: 'RaphaelDemo.pairsController'
         })
       })
     })
