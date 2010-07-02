@@ -11,7 +11,7 @@ RaphaelDemo.mainPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page 
   // load.
   mainPane: SC.MainPane.design({
-    childViews: 'drawingView'.w(),
+    childViews: 'drawingView addPairButton'.w(),
     
     drawingView: RaphaelViews.RaphaelCanvasView.design({
       layout: { centerX: 0, centerY: 0, width: 200, height: 200 },
@@ -34,7 +34,13 @@ RaphaelDemo.mainPage = SC.Page.design({
           useFastPath: YES
         })
       })
+    }),
+
+    addPairButton: SC.ButtonView.design({
+      layout: { centerX: 0, centerY: -150, width: 150, height: 24 },
+      title: "Add Random Point",
+      target: RaphaelDemo.pairsController,
+      action: 'addRandomPair'
     })
   })
-
 });

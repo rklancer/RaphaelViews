@@ -24,3 +24,5 @@ RaphaelDemo.Pair.FIXTURES = [
   }
 
 ];
+
+RaphaelDemo.Pair.nextGuid = 4;
