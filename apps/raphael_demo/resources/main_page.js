@@ -11,7 +11,7 @@ RaphaelDemo.mainPage = SC.Page.design({
   // Add childViews to this pane for views to display immediately on page 
   // load.
   mainPane: SC.MainPane.design({
-    childViews: 'drawingView addPairButton'.w(),
+    childViews: 'drawingView addPairButton timingView'.w(),
     
     drawingView: RaphaelViews.RaphaelCanvasView.design({
       layout: { centerX: 0, centerY: 0, width: 200, height: 200 },
@@ -38,9 +38,19 @@ RaphaelDemo.mainPage = SC.Page.design({
 
     addPairButton: SC.ButtonView.design({
       layout: { centerX: 0, centerY: -150, width: 150, height: 24 },
-      title: "Add Random Point",
+      title: "Add 20 Points",
       target: RaphaelDemo.pairsController,
-      action: 'addRandomPair'
+      action: 'add20Pairs'
+    }),
+    
+    timingView: SC.LabelView.design({
+      layout: { centerX: 200, centerY: 0, width: 100, height: 18 },
+      totalTimeBinding: 'RaphaelDemo.pairsController.totalTime',
+      
+      value: function () {
+        var totalTime = this.get('totalTime');
+        return (totalTime / 20) + ' ms';
+      }.property('totalTime').cacheable()
     })
   })
 });
