@@ -21,14 +21,23 @@ RaphaelDemo.main = function main() {
 
   // Step 2. Set the content property on your primary controller.
   // This will make your app come alive!
-
-  // TODO: Set the content property on your primary controller
-  // ex: RaphaelDemo.contactsController.set('content',RaphaelDemo.contacts);
   
   var fastPathSeries = RaphaelDemo.store.find(RaphaelDemo.DataSeries, 'fast-path');
+  RaphaelDemo.FAST_PATH_QUERY = SC.Query.local(RaphaelDemo.DataPoint, { 
+    conditions: 'series = {series}',
+    series: fastPathSeries,
+    orderBy: 'id'
+  });
+  RaphaelDemo.fastPathController.set('contentWhenConnected', RaphaelDemo.store.find(RaphaelDemo.FAST_PATH_QUERY));
   RaphaelDemo.fastPathController.set('series', fastPathSeries);
 
   var noFastPathSeries = RaphaelDemo.store.find(RaphaelDemo.DataSeries, 'no-fast-path');
+  RaphaelDemo.NO_FAST_PATH_QUERY = SC.Query.local(RaphaelDemo.DataPoint, { 
+    conditions: 'series = {series}',
+    series: noFastPathSeries,
+    orderBy: 'id'
+  });
+  RaphaelDemo.noFastPathController.set('contentWhenConnected', RaphaelDemo.store.find(RaphaelDemo.NO_FAST_PATH_QUERY));
   RaphaelDemo.noFastPathController.set('series', noFastPathSeries);
 } ;
 
