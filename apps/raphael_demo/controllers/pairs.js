@@ -13,11 +13,31 @@
 RaphaelDemo.pairsController = SC.ArrayController.create(
 /** @scope RaphaelDemo.pairsController.prototype */ {
   
+  query: function () {
+    var series = this.get('series');
+    return SC.Query.local(RaphaelDemo.DataPoint, { 
+      conditions: 'series = {series}',
+      series: series,
+      orderBy: 'id'
+    });
+  }.property('series').cacheable(),
+    
+  content: function () {
+    var query = this.get('query');
+    return RaphaelDemo.store.find(query);
+  }.property('query').cacheable(),
+  
   addRandomPair: function () {
     var x = Math.random() * 200;
     var y = Math.random() * 200;
     console.log('adding pair (%d, %d)', x, y);
-    RaphaelDemo.store.createRecord(RaphaelDemo.DataPoint, {x: x, y: y, guid: RaphaelDemo.DataPoint.nextGuid++});
+    var point = RaphaelDemo.store.createRecord(RaphaelDemo.DataPoint, {
+      x: x, 
+      y: y, 
+      guid: RaphaelDemo.DataPoint.nextGuid++
+    });
+    
+    point.set('series', this.get('series'));
   },
   
   addManyPairs: function (n) {
@@ -28,6 +48,7 @@ RaphaelDemo.pairsController = SC.ArrayController.create(
         n--;
         SC.RunLoop.begin();
         controller.addRandomPair();
+        // RaphaelDemo.store.commitRecords();            // make the changes stick
         SC.RunLoop.end();
         setTimeout(addPairWithTimeout, 1);
       }

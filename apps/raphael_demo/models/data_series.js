@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   RaphaelDemo.DataPoint
+// Project:   RaphaelDemo.DataSeries
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals RaphaelDemo */
@@ -11,10 +11,9 @@
   @extends SC.Record
   @version 0.1
 */
-RaphaelDemo.DataPoint = SC.Record.extend(
-/** @scope RaphaelDemo.DataPoint.prototype */ {
+RaphaelDemo.DataSeries = SC.Record.extend(
+/** @scope RaphaelDemo.DataSeries.prototype */ {
+  
+  points: SC.Record.toMany('RaphaelDemo.DataPoint', { inverse: 'series' } )
 
-  x: SC.Record.attr(Number),
-  y: SC.Record.attr(Number),
-  series: SC.Record.toOne('RaphaelDemo.DataSeries', { inverse: 'points' } )
 }) ;
