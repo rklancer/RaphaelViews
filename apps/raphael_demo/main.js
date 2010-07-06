@@ -25,8 +25,8 @@ RaphaelDemo.main = function main() {
   // TODO: Set the content property on your primary controller
   // ex: RaphaelDemo.contactsController.set('content',RaphaelDemo.contacts);
   
-  RaphaelDemo.ALL_PAIRS_QUERY = SC.Query.local(RaphaelDemo.Pair, { orderBy: 'id' });
-  RaphaelDemo.pairsController.set('content', RaphaelDemo.store.find(RaphaelDemo.ALL_PAIRS_QUERY));
+  RaphaelDemo.ALL_DATA_POINTS_QUERY = SC.Query.local(RaphaelDemo.DataPoint, { orderBy: 'id' });
+  RaphaelDemo.pairsController.set('content', RaphaelDemo.store.find(RaphaelDemo.ALL_DATA_POINTS_QUERY));
 } ;
 
 function main() { RaphaelDemo.main(); }

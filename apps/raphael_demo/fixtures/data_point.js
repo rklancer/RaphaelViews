@@ -1,12 +1,12 @@
 // ==========================================================================
-// Project:   RaphaelDemo.Pair Fixtures
+// Project:   RaphaelDemo.DataPoint Fixtures
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals RaphaelDemo */
 
-sc_require('models/pair');
+sc_require('models/data_point');
 
-RaphaelDemo.Pair.FIXTURES = [
+RaphaelDemo.DataPoint.FIXTURES = [
 
   { guid: 1,
     x: 90,
@@ -25,4 +25,4 @@ RaphaelDemo.Pair.FIXTURES = [
 
 ];
 
-RaphaelDemo.Pair.nextGuid = 4;
+RaphaelDemo.DataPoint.nextGuid = 4;

@@ -1,10 +1,10 @@
 // ==========================================================================
-// Project:   RaphaelDemo.Pair Unit Test
+// Project:   RaphaelDemo.DataPoint Unit Test
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals RaphaelDemo module test ok equals same stop start */
 
-module("RaphaelDemo.Pair");
+module("RaphaelDemo.DataPoint");
 
 // TODO: Replace with real unit test for Pair
 test("test description", function() {

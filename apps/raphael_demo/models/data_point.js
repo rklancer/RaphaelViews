@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   RaphaelDemo.Pair
+// Project:   RaphaelDemo.DataPoint
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals RaphaelDemo */
@@ -11,8 +11,8 @@
   @extends SC.Record
   @version 0.1
 */
-RaphaelDemo.Pair = SC.Record.extend(
-/** @scope RaphaelDemo.Pair.prototype */ {
+RaphaelDemo.DataPoint = SC.Record.extend(
+/** @scope RaphaelDemo.DataPoint.prototype */ {
 
   x: SC.Record.attr(Number),
   y: SC.Record.attr(Number)
