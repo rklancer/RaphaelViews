@@ -13,6 +13,8 @@
 RaphaelDemo.DataSeriesController = SC.ArrayController.extend(
 /** @scope RaphaelDemo.dataSeriesController.prototype */ {
 
+  series: null,
+  
   query: function () {
     var series = this.get('series');
     return SC.Query.local(RaphaelDemo.DataPoint, { 
@@ -21,14 +23,29 @@ RaphaelDemo.DataSeriesController = SC.ArrayController.extend(
       orderBy: 'id'
     });
   }.property('series').cacheable(),
-    
-  content: function () {
-    var query = this.get('query');
-    return RaphaelDemo.store.find(query);
-  }.property('query').cacheable(),
   
-  addRandomPair: function () {
-    var x = Math.random() * 200;
+  isDisconnected: NO,
+  
+  disconnect: function () {
+    this.set('isDisconnected', YES);
+  },
+  
+  reconnect: function () {
+    this.set('isDisconnected', NO);
+  },
+  
+  content: function (key, val) {
+    if (this.get('isDisconnected')) {
+      return [];
+    }
+    else {
+      var query = this.get('query');
+      return RaphaelDemo.store.find(query);
+    }
+  }.property('query', 'isDisconnected').cacheable(),
+  
+  addRandomPoint: function () {
+    var x = Math.random() * 320;
     var y = Math.random() * 200;
     console.log('adding pair (%d, %d)', x, y);
     var point = RaphaelDemo.store.createRecord(RaphaelDemo.DataPoint, {
@@ -40,21 +57,25 @@ RaphaelDemo.DataSeriesController = SC.ArrayController.extend(
     point.set('series', this.get('series'));
   },
   
-  addManyPairs: function (n) {
+  addManyPoints: function (n) {
     var controller = this;
+    this.set('nAdded' , 0);
     
-    var addPairWithTimeout = function () {
+    this.willAddManyPoints();
+    
+    var addPointWithTimeout = function () {
       if (n > 0) {
         n--;
         SC.RunLoop.begin();
-        controller.addRandomPair();
-        // RaphaelDemo.store.commitRecords();            // make the changes stick
+        controller.addRandomPoint();
+        controller.incrementProperty('nAdded');
         SC.RunLoop.end();
-        setTimeout(addPairWithTimeout, 1);
+        setTimeout(addPointWithTimeout, 1);
       }
       else {
         controller.timingStop();
         SC.RunLoop.begin();
+        controller.didAddManyPoints();
         SC.RunLoop.end();
       }
     };
@@ -62,11 +83,12 @@ RaphaelDemo.DataSeriesController = SC.ArrayController.extend(
     SC.RunLoop.end();
 
     this.timingStart();
-    addPairWithTimeout();
+    addPointWithTimeout();
   },
   
   startTime: null,
   endTime: null,
+  nAdded: null,
   
   timingStart: function () {
     this.set('startTime', new Date());
@@ -80,12 +102,18 @@ RaphaelDemo.DataSeriesController = SC.ArrayController.extend(
     return this.get('endTime') - this.get('startTime');
   }.property('endTime').cacheable(),
   
-  add100Pairs: function () {
-    this.addManyPairs(100);
+  add100Points: function () {
+    this.addManyPoints(100);
   },
   
-  add20Pairs: function () {
-    this.addManyPairs(20);
+  add20Points: function () {
+    this.addManyPoints(20);
+  },
+  
+  willAddManyPoints: function () {
+  },
+  
+  didAddManyPoints: function () {
   }
 
 }) ;

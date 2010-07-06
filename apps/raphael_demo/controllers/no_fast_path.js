@@ -14,7 +14,14 @@ sc_require('controllers/data_series');
 
 RaphaelDemo.noFastPathController = RaphaelDemo.DataSeriesController.create(
 /** @scope RaphaelDemo.fastPathController.prototype */ {
-  series: null
+  
+  willAddManyPoints: function (n) {
+    RaphaelDemo.fastPathController.disconnect();
+  },
+  
+  didAddManyPoints: function () {
+    RaphaelDemo.fastPathController.reconnect();
+  }
   
 }) ;
 
