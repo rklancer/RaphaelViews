@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   RaphaelDemo.noFastPathController Unit Test
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Richard Klancer
 // ==========================================================================
 /*globals RaphaelDemo module test ok equals same stop start */
 

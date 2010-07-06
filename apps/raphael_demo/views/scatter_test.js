@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   RaphaelDemo.ScatterTestView
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Richard Klancer
 // ==========================================================================
 /*globals RaphaelDemo RaphaelViews*/
 

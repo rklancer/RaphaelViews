@@ -1,6 +1,6 @@
 // ==========================================================================
 // Project:   RaphaelDemo.DataPointView
-// Copyright: ©2010 My Company, Inc.
+// Copyright: ©2010 Richard Klancer
 // ==========================================================================
 /*globals RaphaelDemo RaphaelViews*/
 
@@ -29,7 +29,7 @@ RaphaelDemo.DataPointView = RaphaelViews.RaphaelView.extend(
   },
   
   render: function (context, firstTime) {
-    //console.log('DataPointView render(), firstTime = ', firstTime);
+    //addPointWithTimeoutlog('DataPointView render(), firstTime = ', firstTime);
     
     var isSelected = this.get('isSelected');
     var fill = isSelected ?  this.get('selectedFill') : this.get('fill');
