@@ -132,5 +132,69 @@ RaphaelViews.RenderSupport = {
     }
 
     return context;
-  }
+  },
+
+
+  // CollectionFastPath support
+  
+  
+  /**
+    @private
+    Hides the view using Raphael, before it's pooled, because the standard off-screening mechanism used by
+    CollectionFastPath won't work for Raphael views. Note that even though this method is called 'sleepInDOMPool',
+    CollectionFastPath may eventually move this from the DOM pool to an off-DOM pool before it's awakened.
+  */
+  sleepInDOMPool: function () {
+    this._wasVisibleBeforeSleep = !this.get('isHidden');
+    var layer = this.get('layer');    
+    if (layer && layer.raphael) {
+      layer.raphael.hide();
+    }
+  },
+  
+  /**
+    @private
+    Re-show the view if it's been pooled in the DOM.
+  */
+  wakeFromDOMPool: function () {
+    this.wakeFromPool();
+  },
+  
+  /**
+    @private
+    Re-show the view if it's been pooled off-DOM. Note that even though the only sleep method is 'sleepInDOMPool()',
+    we can't therefore conclude that this view will be awakened from the DOM pool. CollectionFastPath moves some views
+    from the DOM pool to the off-DOM pool while they sleep.
+  */
+  awakeFromPool: function () {
+    this.wakeFromPool();
+  },
+  
+  /**
+    @private
+    Re-show the view whether it's been pooled on or off-DOM.
+  */
+  wakeFromPool: function () {
+    var layer = this.get('layer');
+    if (this._wasVisibleBeforeSleep && layer && layer.raphael) layer.raphael.show();
+  },
+
+  // TODO support the case where the view's content is a Raphael set
+  isHidden: function () {
+    var layer = this.get('layer');
+    if (!layer || !layer.raphael) {
+      return;
+    }
+    var raphaelObj = layer.raphael;
+
+    if (raphaelObj.paper.constructor.vml) {
+      return (raphaelObj.removed || raphaelObj.Group.style.display === "none");
+    }
+    else if (raphaelObj.paper.constructor.svg) {
+      return (raphaelObj.removed || raphaelObj.node.style.display === "none");
+    }
+    else {
+      throw "Can't figure out from layer.raphael whether mode is SVG or VML";
+    }
+  }.property()
 };
