@@ -8,7 +8,7 @@ sc_require('models/data_series');
 
 RaphaelDemo.DataSeries.FIXTURES = [
 
-  { guid: 1, points: [] },
-  { guid: 2, points: [1] }
+  { guid: 'fast-path', points: [] },
+  { guid: 'no-fast-path', points: [] }
 
 ];

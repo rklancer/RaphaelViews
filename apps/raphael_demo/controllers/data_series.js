@@ -8,7 +8,7 @@
 
   (Document Your Controller Here)
 
-  @extends SC.Object
+  @extends SC.ArrayController
 */
 RaphaelDemo.DataSeriesController = SC.ArrayController.extend(
 /** @scope RaphaelDemo.dataSeriesController.prototype */ {

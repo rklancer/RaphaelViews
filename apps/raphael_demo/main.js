@@ -25,9 +25,11 @@ RaphaelDemo.main = function main() {
   // TODO: Set the content property on your primary controller
   // ex: RaphaelDemo.contactsController.set('content',RaphaelDemo.contacts);
   
-  var series = RaphaelDemo.store.find(RaphaelDemo.DataSeries, 1);
-  RaphaelDemo.fastPathController.set('series', series);
+  var fastPathSeries = RaphaelDemo.store.find(RaphaelDemo.DataSeries, 'fast-path');
+  RaphaelDemo.fastPathController.set('series', fastPathSeries);
 
+  var noFastPathSeries = RaphaelDemo.store.find(RaphaelDemo.DataSeries, 'no-fast-path');
+  RaphaelDemo.noFastPathController.set('series', noFastPathSeries);
 } ;
 
 function main() { RaphaelDemo.main(); }

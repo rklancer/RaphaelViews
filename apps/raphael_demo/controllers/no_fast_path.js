@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   RaphaelDemo.fastPathController
+// Project:   RaphaelDemo.noFastPathController
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals RaphaelDemo */
@@ -12,8 +12,9 @@
 */
 sc_require('controllers/data_series');
 
-RaphaelDemo.fastPathController = RaphaelDemo.DataSeriesController.create(
+RaphaelDemo.noFastPathController = RaphaelDemo.DataSeriesController.create(
 /** @scope RaphaelDemo.fastPathController.prototype */ {
   series: null
   
 }) ;
+
