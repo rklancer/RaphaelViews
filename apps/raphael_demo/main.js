@@ -26,7 +26,7 @@ RaphaelDemo.main = function main() {
   // ex: RaphaelDemo.contactsController.set('content',RaphaelDemo.contacts);
   
   var series = RaphaelDemo.store.find(RaphaelDemo.DataSeries, 1);
-  RaphaelDemo.pairsController.set('series', series);
+  RaphaelDemo.fastPathController.set('series', series);
 
 } ;
 

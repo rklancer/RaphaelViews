@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   RaphaelDemo.pairsController
+// Project:   RaphaelDemo.dataSeriesController
 // Copyright: ©2010 My Company, Inc.
 // ==========================================================================
 /*globals RaphaelDemo */
@@ -8,11 +8,11 @@
 
   (Document Your Controller Here)
 
-  @extends SC.ArrayController
+  @extends SC.Object
 */
-RaphaelDemo.pairsController = SC.ArrayController.create(
-/** @scope RaphaelDemo.pairsController.prototype */ {
-  
+RaphaelDemo.DataSeriesController = SC.ArrayController.extend(
+/** @scope RaphaelDemo.dataSeriesController.prototype */ {
+
   query: function () {
     var series = this.get('series');
     return SC.Query.local(RaphaelDemo.DataPoint, { 
@@ -87,4 +87,5 @@ RaphaelDemo.pairsController = SC.ArrayController.create(
   add20Pairs: function () {
     this.addManyPairs(20);
   }
+
 }) ;

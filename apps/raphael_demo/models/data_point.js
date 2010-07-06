@@ -17,4 +17,5 @@ RaphaelDemo.DataPoint = SC.Record.extend(
   x: SC.Record.attr(Number),
   y: SC.Record.attr(Number),
   series: SC.Record.toOne('RaphaelDemo.DataSeries', { inverse: 'points' } )
+  
 }) ;

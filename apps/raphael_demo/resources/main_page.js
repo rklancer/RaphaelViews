@@ -30,7 +30,7 @@ RaphaelDemo.mainPage = SC.Page.design({
         
         scatterView: RaphaelViews.RaphaelCollectionView.design({
           exampleView: RaphaelDemo.DataPointView,
-          contentBinding: 'RaphaelDemo.pairsController',
+          contentBinding: 'RaphaelDemo.fastPathController',
           useFastPath: YES
         })
       })
@@ -39,13 +39,13 @@ RaphaelDemo.mainPage = SC.Page.design({
     addPairButton: SC.ButtonView.design({
       layout: { centerX: 0, centerY: -150, width: 150, height: 24 },
       title: "Add 20 Points",
-      target: RaphaelDemo.pairsController,
+      target: RaphaelDemo.fastPathController,
       action: 'add20Pairs'
     }),
     
     timingView: SC.LabelView.design({
       layout: { centerX: 200, centerY: 0, width: 100, height: 18 },
-      totalTimeBinding: 'RaphaelDemo.pairsController.totalTime',
+      totalTimeBinding: 'RaphaelDemo.fastPathController.totalTime',
       
       value: function () {
         var totalTime = this.get('totalTime');
