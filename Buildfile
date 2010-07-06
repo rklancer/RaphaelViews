@@ -12,5 +12,5 @@ config :raphael_views,
 config 'g.raphael.plugins', :required => ['g.raphael']
 config 'g.raphael', :required => [:raphael]  
 
-config :raphael_demo, :required => :raphael_views
+config :raphael_demo, :required => :raphael_views, :load_fixtures => true
 
