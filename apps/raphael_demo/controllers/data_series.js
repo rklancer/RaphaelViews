@@ -47,7 +47,7 @@ RaphaelDemo.DataSeriesController = SC.ArrayController.extend(
   addRandomPoint: function () {
     var x = Math.random() * 320;
     var y = Math.random() * 200;
-    console.log('adding pair (%d, %d)', x, y);
+    //console.log('adding pair (%d, %d)', x, y);
     var point = RaphaelDemo.store.createRecord(RaphaelDemo.DataPoint, {
       x: x, 
       y: y, 
