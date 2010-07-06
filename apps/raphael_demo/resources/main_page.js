@@ -14,7 +14,7 @@ RaphaelDemo.mainPage = SC.Page.design({
     childViews: 'fastPathView noFastPathView'.w(), 
     
     fastPathView: SC.View.design({
-      layout: { centerX: 0, centerY: -160, left: 0, right: 0, height: 320 },
+      layout: { centerX: 0, centerY: -140, left: 0, right: 0, height: 280 },
       
       childViews: 'labelView drawingView addPairButton timingView'.w(),
       
@@ -69,7 +69,7 @@ RaphaelDemo.mainPage = SC.Page.design({
     // rather than just passing hashes (b/c binding paths and useFastPath have to be known at view init time)
     
     noFastPathView: SC.View.design({
-      layout: { centerX: 0, centerY: 160, left: 0, right: 0, height: 320 },
+      layout: { centerX: 0, centerY: 140, left: 0, right: 0, height: 280 },
       
       childViews: 'labelView drawingView addPairButton timingView'.w(),
       
