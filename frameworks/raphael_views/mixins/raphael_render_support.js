@@ -145,9 +145,9 @@ RaphaelViews.RenderSupport = {
     CollectionFastPath may eventually move this from the DOM pool to an off-DOM pool before it's awakened.
   */
   sleepInDOMPool: function () {
-    this._wasVisibleBeforeSleep = !this.get('isHidden');
-    var layer = this.get('layer');    
-    if (layer && layer.raphael) {
+    this._wasVisibleBeforeSleep = this.get('isVisible');
+    var layer = this.get('layer');  
+    if (layer && layer.raphael && this._wasVisibleBeforeSleep) {
       layer.raphael.hide();
     }
   },
@@ -177,24 +177,5 @@ RaphaelViews.RenderSupport = {
   wakeFromPool: function () {
     var layer = this.get('layer');
     if (this._wasVisibleBeforeSleep && layer && layer.raphael) layer.raphael.show();
-  },
-
-  // TODO support the case where the view's content is a Raphael set
-  isHidden: function () {
-    var layer = this.get('layer');
-    if (!layer || !layer.raphael) {
-      return;
-    }
-    var raphaelObj = layer.raphael;
-
-    if (raphaelObj.paper.constructor.vml) {
-      return (raphaelObj.removed || raphaelObj.Group.style.display === "none");
-    }
-    else if (raphaelObj.paper.constructor.svg) {
-      return (raphaelObj.removed || raphaelObj.node.style.display === "none");
-    }
-    else {
-      throw "Can't figure out from layer.raphael whether mode is SVG or VML";
-    }
-  }.property()
+  }
 };
