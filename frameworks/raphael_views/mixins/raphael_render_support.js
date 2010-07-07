@@ -84,18 +84,15 @@ RaphaelViews.RenderSupport = {
 
 
   raphaelCanvas: function () {
-    var pv;
-
-    pv = this.get('parentView');
+    var pv = this.get('parentView');
     return pv.get('raphaelCanvas');     // recurse until you hit parent RaphaelCanvasView
   }.property(),
 
 
-  didCreateLayer: function () {
-    // Best to keep the raphael object tightly bound to the DOM node it's responsible for
+  raphaelObject: function () {
     var layer = this.get('layer');
-    this.set('raphaelObject', layer.raphael);
-  },
+    return layer && layer.raphael;
+  }.property(),
 
 
   updateLayer: function () {
