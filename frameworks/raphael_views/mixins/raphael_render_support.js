@@ -99,19 +99,16 @@ RaphaelViews.RenderSupport = {
 
 
   updateLayer: function () {
-    // eventually we'll create a RaphaelContext focused on the layer and provide update methods
-    var dummyContext = {
-      begin: function () {},
-      end: function () {}
-    };
-
-    this.render(dummyContext, NO);
+    var context = RaphaelViews.RaphaelContext(this.get('layer'));
+    this.prepareRaphaelContext(context, NO);
+    context.update();
   },
 
 
   prepareRaphaelContext: function (raphaelContext, firstTime) {
     raphaelContext.id(this.get('layerId'));
-
+    raphaelContext.visible(this.get('isVisible'));
+    
     this.beginPropertyChanges();
     this.set('layerNeedsUpdate', NO);
     this.render(raphaelContext, firstTime);

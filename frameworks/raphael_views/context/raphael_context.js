@@ -29,7 +29,8 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
    
   isRaphaelContext: YES,
 
-  init: function (prevContext) {
+  init: function (node, prevContext) {
+    this._node = node;
     this.prevObject = prevContext;
     this.isTopLevel = !prevContext;
     this.children = [];
@@ -40,7 +41,7 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
   
 
   begin: function() {
-    var ret = RaphaelViews.RaphaelContext(this);
+    var ret = RaphaelViews.RaphaelContext(this._node, this);
     this.children.push(ret);
     
     return ret;
@@ -67,6 +68,12 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
   
   id: function (id) {
     this._id = id;
+    return this;
+  },
+  
+
+  visible: function (isVisible) {
+    this._isVisible = isVisible;
     return this;
   },
   
@@ -118,13 +125,29 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     }
 
     if (layerNode) {
-      layerNode.id = this._id;
+      // When Raphael draws a shape, it stashes a reference to the raphael object in the DOM node for the shape.
+      // If we've wrapped the shape, just stash it at the top level node we've created (note also that Raphael creates
+      // a wrapper <group> node in VML mode but doesn't stash the reference there-another reason to stash it ourselves)
       if (!layerNode.raphael) {
-        layerNode.raphael = raphaelObj;
+        layerNode.raphael = raphaelObj;     
       }
+      this.update(layerNode);
     }
 
     return layerNode;
+  },
+  
+  
+  update: function (node) {
+    if (node === undefined) node = this._node;
+    
+    node.id = this._id;
+    node.style.display = this._isVisible ? "" : "none";
+  },
+  
+  
+  raphael: function () {
+    return this._node && this._node.raphael;
   },
   
   
