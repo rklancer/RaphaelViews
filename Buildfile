@@ -3,14 +3,12 @@
 # Copyright: ©2010 Richard Klancer and Concord Consortium.
 # ===========================================================================
 
-# Add initial buildfile information here
-config :all, 
-  :required => [:sproutcore]
-
-config :raphael_views,
-  :required => [:raphael, 'g.raphael', 'g.raphael.plugins'] 
-config 'g.raphael.plugins', :required => ['g.raphael']
-config 'g.raphael', :required => [:raphael]  
+config :all, :required => [:sproutcore]
+config :raphael_views, :required => [:raphael]
 
 config :raphael_demo, :required => :raphael_views, :load_fixtures => true
 
+# require 'g.raphael.plugins' if you want most g.raphael functionality
+
+config 'g.raphael.plugins', :required => ['g.raphael']
+config 'g.raphael', :required => [:raphael]
