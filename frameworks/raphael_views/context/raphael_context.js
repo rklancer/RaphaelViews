@@ -157,7 +157,16 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
       document.createElementNS("http://www.w3.org/2000/svg", "g");
   },
   
+  /**
+    Wraps the list of nodes 'nodes' with a new grouping element (<g> in SVG, <group> in VML). Appends the new grouping
+    element, now containing the passed nodes, into the raphael canvas immediately before the previous location of 
+    node[0]
   
+    TODO
+    @param (nodes) the list of
+    @param (raphaelCanvas) the raphael Canvas manager object ('paper')
+    @returns
+  */
   wrap: function (nodes, raphaelCanvas) {
     // see http://smartgraph-demos.dev.concord.org/test-raphael-group.html
 
@@ -173,10 +182,16 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     return $wrapper[0];
   },
 
-
-  flattenRaphaelSets: function (raphaelObj) {
-    // convert nested Raphael sets into a flattened list of Raphael shape objects
-
+  /**
+    Converts a Raphael 'manager' object raphaelObj that may represent a Raphael set 
+    (http://raphaeljs.com/reference.html#set) into a simple array of Raphael manager objects that represent the 
+    underlying shapes. (Nested Raphael sets are flattened, rather than converted into nested arrays.)
+  
+    TODO:
+    @param (raphaelObj) a Raphael manager object that represents either a Raphael set or a simple shape
+    @returns (array of raphaelObjs) 'flattened' list of Raphael manager objects that represent simple shapes
+  */
+  flattenRaphaelSets: function (raphaelObj) { 
     var objs = [];
     if (raphaelObj.type === 'set') {
       for (var i = 0, ii = raphaelObj.items.length; i < ii; i++) {
@@ -188,20 +203,25 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
       return [raphaelObj];
     }
   },
-  
-  
+
+  /**
+    Returns the outermost DOM node created for a given shape by Raphael, given the Raphael object raphaelObj that
+    manages the shape. Raphael endows raphaelObj with a 'node' property that references the shape node, but in VML mode
+    Raphael also wraps that shape node with a outer 'group' element, referenced by the Group property of raphaelObj. In
+    VML mode, this returns the outer group element. In SVG mode, the 'node' is the outermost element, and is what is
+    returned.
+
+    TODO: 
+    @param ...?
+    @returns ...?
+  */
   nodeForRaphaelObject: function (raphaelObj) {
-    var groupNode;
+    var isVML = raphaelObj.paper.constructor.vml;
     
-    if (!(raphaelObj.paper.constructor.vml || raphaelObj.paper.constructor.svg)) {
+    if (!(isVML || raphaelObj.paper.constructor.svg)) {
       throw "RaphaelContext can't figure out from raphaelObj whether mode is SVG or VML";
     }
     
-    if (raphaelObj.paper.constructor.vml && (groupNode = raphaelObj.Group)) {
-      return groupNode;
-    }
-    else {
-      return raphaelObj.node;
-    }
+    return isVML ? raphaelObj.Group : raphaelObj.node;
   }
 });
