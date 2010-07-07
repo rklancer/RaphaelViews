@@ -40,7 +40,7 @@ RaphaelDemo.DataPointView = RaphaelViews.RaphaelView.extend(
         this.get('radius'), fill, stroke);
     }
     else {
-      var circle = this.get('raphaelObject');
+      var circle = context.raphael();
       circle.attr({ cx: this.getPath('content.x') || 0, cy: this.getPath('content.y') || 0, radius: this.get('radius'), 
         fill: fill, stroke: stroke });
     }
