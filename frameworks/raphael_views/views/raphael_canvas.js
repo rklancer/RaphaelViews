@@ -6,7 +6,8 @@
 
 /** @class
 
-    Class for managing the Raphael 'canvas' instance.
+    Class for managing the Raphael 'canvas' instance. (Not to be confused with a <canvas> element created by the
+    Canvas API. We are not using the Canvas API.)
     
     All Raphael shapes must be drawn within a 'canvas', managed by the object returned by Raphael(). In SVG-supporting
     browsers, this corresponds to the containing <svg> element.
@@ -51,7 +52,7 @@ RaphaelViews.RaphaelCanvasView = SC.View.extend(
     var layer = this.get('layer');
     var frame = this.get('frame');
     var r = Raphael(layer, frame.width, frame.height);
-    this.set('raphaelCanvas', r);     // we really need to avoid raphaelCanvas vs. raphaelObject confusion
+    this.set('raphaelCanvas', r);
     
     if (this._preparedRaphaelContext) {
       this._preparedRaphaelContext.populateCanvas(r);

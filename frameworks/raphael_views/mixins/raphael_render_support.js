@@ -1,5 +1,5 @@
 // ==========================================================================
-// Project:   RaphaelViews.RaphaelRenderSupport
+// Project:   RaphaelViews.RenderSupport
 // Copyright: ©2010 Richard Klancer and Concord Consortium
 // ==========================================================================
 /*globals RaphaelViews */
@@ -20,10 +20,6 @@ RaphaelViews.RenderSupport = {
     Handles changes in the layer id. Modified from SC.View for bugfixes needed by CollectionFastPath mixin.
     Heads up on the need for this bugfix to alexiskander.
     
-    Yes, this really works to monkey patch SC.View.layerIdDidChange (observers added by 
-    'function () {...}.observes(...)' are referenced by name, so the observer dispatcher will find this method instead
-    of the base layerIdDidChange)
-    
   */
   layerIdDidChange: function() {
     var layer = this.get("layer");
@@ -43,7 +39,10 @@ RaphaelViews.RenderSupport = {
       // and finally, set the actual layer id.
       layer.id = this.get("layerId");
     }
-  }.observes('layerId'),
+    // Yes, this really works to monkey patch SC.View.layerIdDidChange (observers added by 
+    // 'function () {...}.observes(...)' are referenced by name, so the observer dispatcher will find this method 
+    // instead of the base layerIdDidChange):
+  }.observes('layerId'),  
 
 
   createLayer: function () {
