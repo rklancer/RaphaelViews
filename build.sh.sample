@@ -60,7 +60,7 @@ config :all,
 END
 
 # add testswarm's inject.js to the debug folder of raphael_views, so it's included in all raphael_views tests
-mkdir frameworks/raphael_views/debug
+mkdir -p frameworks/raphael_views/debug
 curl http://github.com/concord-consortium/testswarm/raw/cc/js/inject.js -o frameworks/raphael_views/debug/HUDSON-inject.js
 
 # build the project in debug mode, to get tests
