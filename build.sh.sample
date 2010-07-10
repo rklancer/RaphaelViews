@@ -102,7 +102,7 @@ for appname in `ls apps` ; do
   export APP_PATH=demos/$COMMIT_HASH/$appname/en/$SC_BUILD_NUMBER/index.html
   if [ -e  $PROJECT_DIR/$APP_PATH ] ; then
     mkdir -p $PROJECT_DIR/demos/$appname/latest/
-    ln -s $PROJECT_DIR/$APP_PATH $PROJECT_DIR/demos/$appname/latest/index.html
+    ln -sf $PROJECT_DIR/$APP_PATH $PROJECT_DIR/demos/$appname/latest/index.html
   fi ;
 done
 
