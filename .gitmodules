@@ -1,6 +1,6 @@
 [submodule "frameworks/raphael-git/raphael"]
-	path = frameworks/raphael-git/raphael
+	path = raphael-git/raphael
 	url = http://github.com/DmitryBaranovskiy/raphael.git
 [submodule "frameworks/raphael-git/g.raphael"]
-	path = frameworks/raphael-git/g.raphael
+	path = raphael-git/g.raphael
 	url = http://github.com/DmitryBaranovskiy/g.raphael.git
