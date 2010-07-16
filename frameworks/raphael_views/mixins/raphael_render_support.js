@@ -129,6 +129,15 @@ RaphaelViews.RenderSupport = {
   },
 
 
+  // Temporary fix for quilmes
+  // Sproutcore 1.1 refactored much of the render logic. The code above uses now-deprecated code paths.
+  // The following is a temporary patch to avoid problems with renderers attempting to apply setClass to SVG
+  // elements, which don't support that method.
+  
+  renderLayout: function (context, firstTime) {
+    // do nothing.
+  },
+  
   // CollectionFastPath support
   
   
