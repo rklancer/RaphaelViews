@@ -26,8 +26,13 @@ RaphaelViews.RaphaelCanvasView = SC.View.extend(
   // was created, at the moment our layer is created.
   // That works for normal SC.Views but *our* child view layers aren't created until after we call populateCanvas()
   
-  _notifyDidCreateLayer: function () {
-    this.didCreateLayer();
+  _notifyDidCreateLayer: function() {
+    // notify, not just the view, but also the view renderers
+    this.notifyPropertyChange('layer');
+    this._viewRenderer.attachLayer(this);
+    if (this.renderer) this.renderer.attachLayer(this);
+    
+    this.didCreateLayer() ;
     
     var mixins = this.didCreateLayerMixin;
     if (mixins) {
