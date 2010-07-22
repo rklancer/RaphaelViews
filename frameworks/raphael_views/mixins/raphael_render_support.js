@@ -13,7 +13,7 @@ RaphaelViews.RenderSupport = {
 
   // default behavior that we can override
   render: function (context, firstTime) {
-    if (firstTime) this.renderChildViews(context, firstTime);
+    this.renderChildViews(context, firstTime);
   },
   
   /**
@@ -120,7 +120,7 @@ RaphaelViews.RenderSupport = {
       view = cv[i];
       if (!view) continue;
 
-      context = context.begin();
+      context = context.begin(view.get('layer'));
       view.prepareRaphaelContext(context, firstTime);
       context = context.end();
     }
