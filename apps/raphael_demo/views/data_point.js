@@ -17,7 +17,9 @@ RaphaelDemo.DataPointView = RaphaelViews.RaphaelView.extend(
   
   fill: '#cccccc',
   stroke: '#cccccc',
-  radius: 3,
+  noHoverRadius: 3,
+  hoverRadius: 5,
+  isHovered: NO,
   isSelected: NO,
   isEnabled: YES,
   selectedFill: '#0000aa',
@@ -25,12 +27,24 @@ RaphaelDemo.DataPointView = RaphaelViews.RaphaelView.extend(
   layerIsCacheable: YES,
   isPoolable: YES,
   
+  radius: function () {
+    return (this.get('isHovered') ? this.get('hoverRadius') : this.get('noHoverRadius'));
+  }.property('isHovered', 'hoverRadius', 'noHoverRadius').cacheable(),
+  
+  mouseEntered: function () {
+    this.set('isHovered', YES);
+  },
+  
+  mouseExited: function () {
+    this.set('isHovered', NO);
+  },
+  
   renderCallback: function (raphaelCanvas, x, y, radius, fill, stroke) {
     return raphaelCanvas.circle(x, y, radius).attr({ fill: fill, stroke: stroke });
   },
   
   render: function (context, firstTime) {
-        
+
     var isSelected = this.get('isSelected');
     var fill = isSelected ?  this.get('selectedFill') : this.get('fill');
     var stroke = isSelected ? this.get('selectedStroke') : this.get('stroke');
@@ -45,5 +59,5 @@ RaphaelDemo.DataPointView = RaphaelViews.RaphaelView.extend(
         fill: fill, stroke: stroke });
     }
   }
-
+    
 });
