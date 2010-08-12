@@ -40,8 +40,8 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
   },
   
 
-  begin: function() {
-    var ret = RaphaelViews.RaphaelContext(this._node, this);
+  begin: function (node) {
+    var ret = RaphaelViews.RaphaelContext(node, this);
     this.children.push(ret);
     
     return ret;

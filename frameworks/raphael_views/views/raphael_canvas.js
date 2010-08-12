@@ -84,7 +84,7 @@ RaphaelViews.RaphaelCanvasView = SC.View.extend(
       view = cv[i];
       if (!view) continue;
 
-      raphaelContext = raphaelContext.begin();
+      raphaelContext = raphaelContext.begin(view.get('layer'));
       view.prepareRaphaelContext(raphaelContext, firstTime);
       raphaelContext = raphaelContext.end();
     }  
