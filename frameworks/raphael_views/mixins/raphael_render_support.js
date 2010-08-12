@@ -13,7 +13,7 @@ RaphaelViews.RenderSupport = {
 
   // default behavior that we can override
   render: function (context, firstTime) {
-    if (firstTime) this.renderChildViews(context, firstTime);
+    this.renderChildViews(context, firstTime);
   },
   
   /**
@@ -120,7 +120,7 @@ RaphaelViews.RenderSupport = {
       view = cv[i];
       if (!view) continue;
 
-      context = context.begin();
+      context = context.begin(view.get('layer'));
       view.prepareRaphaelContext(context, firstTime);
       context = context.end();
     }
@@ -140,6 +140,15 @@ RaphaelViews.RenderSupport = {
   
   // CollectionFastPath support
   
+  /** @private
+      Items that are 'sleeping in the DOM pool' stay in our childViews array. Therefore we need to deal with the 
+      fact that we will end up telling them to create a layer while they are still asleep.  */
+      
+  didCreateLayer: function () {
+    if (this._isSleeping) {
+      this.get('raphaelObject').hide();
+    }
+  },
   
   /**
     @private
@@ -148,6 +157,7 @@ RaphaelViews.RenderSupport = {
     CollectionFastPath may eventually move this from the DOM pool to an off-DOM pool before it's awakened.
   */
   sleepInDOMPool: function () {
+    this._isSleeping = YES;
     this._wasVisibleBeforeSleep = this.get('isVisible');
     var layer = this.get('layer');  
     if (layer && layer.raphael && this._wasVisibleBeforeSleep) {
@@ -178,6 +188,7 @@ RaphaelViews.RenderSupport = {
     Re-show the view whether it's been pooled on or off-DOM.
   */
   wakeFromPool: function () {
+    this._isSleeping = NO;
     var layer = this.get('layer');
     if (this._wasVisibleBeforeSleep && layer && layer.raphael) layer.raphael.show();
   }
