@@ -58,30 +58,6 @@ RaphaelViews.RenderSupport = {
     this._notifyDidCreateLayer();
   },
 
-
-  // Modified from SC.View's 'layer' getter/setter, which is problematic because it caches the found layer
-  // without an apparent mechanism to flush the cached value.
-  layer: function(key, value) {
-    if (value !== undefined) {
-      // setting layer
-      this._view_layer = value ;
-    }
-    else {
-      // get layer
-      value = this._view_layer;           // use cached value only if explicitly set.
-      if (!value) {
-        var parent = this.get('parentView');
-        if (parent) parent = parent.get('layer');
-        if (parent) {
-          value = this.findLayerInParentLayer(parent);      // generally findLayerInParentLayer will be fast
-        }
-        parent = null ; // avoid memory leak
-      }
-    }
-    return value ;
-  }.property('isVisibleInWindow'),
-
-
   raphaelCanvas: function () {
     var pv = this.get('parentView');
     return pv.get('raphaelCanvas');     // recurse until you hit parent RaphaelCanvasView
@@ -148,6 +124,19 @@ RaphaelViews.RenderSupport = {
     if (this._isSleeping) {
       this.get('raphaelObject').hide();
     }
+    
+    // set the layer cache explicitly
+    this._view_layer = this.get('layer');
+  },
+  
+  /** @private
+  
+      Invalidate SC.View's internal layer cache when the layer is destroyed. We need to have some layer caching
+      because layerIdDidChange needs to access the previous layer without knowing the current layer id
+  */
+  
+  willDestroyLayer: function () {
+    this._view_layer = null;
   },
   
   /**
