@@ -120,12 +120,15 @@ RaphaelViews.RenderSupport = {
       Items that are 'sleeping in the DOM pool' stay in our childViews array. Therefore we need to deal with the 
       fact that we will end up telling them to create a layer while they are still asleep.  */
       
-  didCreateLayer: function () {
+  _notifyDidCreateLayer: function () {
+    sc_super();
     if (this._isSleeping) {
       this.get('raphaelObject').hide();
     }
     
     // set the layer cache explicitly
+    this._view_layer = null;
+    this.notifyPropertyChange('layer');
     this._view_layer = this.get('layer');
   },
   
@@ -135,8 +138,9 @@ RaphaelViews.RenderSupport = {
       because layerIdDidChange needs to access the previous layer without knowing the current layer id
   */
   
-  willDestroyLayer: function () {
+  _notifyWillDestroyLayer: function () {
     this._view_layer = null;
+    sc_super();
   },
   
   /**
