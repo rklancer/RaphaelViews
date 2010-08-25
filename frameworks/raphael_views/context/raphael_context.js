@@ -108,7 +108,7 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     // generate a group node at least if there are no child contexts and no Raphael objects created in this context
     if (layerNodes.length === 0 && childNodes.length === 0) {
       groupNode = this.generateGroupNode(raphaelCanvas);
-      SC.$(raphaelCanvas.paper).append(SC.$(groupNode));
+      SC.$(raphaelCanvas.canvas).append(SC.$(groupNode));
       layerNodes.push(groupNode);
     }
     
