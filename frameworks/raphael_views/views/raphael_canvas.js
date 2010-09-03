@@ -72,7 +72,11 @@ RaphaelViews.RaphaelCanvasView = SC.View.extend(
     return this.get('raphaelCanvas').canvas;        // canvas = Raphael's pointer to the SVG or VML element itself
   }.property(),
   
-  
+  // TODO eventually we can move to the Renderer paradigm and ditch this re-statement of the pre-Quilmes render()
+  render: function (context, firstTime) {
+    this.renderChildViews(context, firstTime);
+  },
+    
   renderChildViews: function (context, firstTime) {
     var cv = this.get('childViews');
     var view;
