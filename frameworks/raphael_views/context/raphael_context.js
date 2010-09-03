@@ -95,8 +95,10 @@ RaphaelViews.RaphaelContext = SC.Builder.create(/** RaphaelViews.RaphaelContext.
     // generate node or set of nodes from the Raphael object returned by the render callback, if any
     if (this._callback) {
       raphaelObj = this._callback.apply(this._thisArg, [raphaelCanvas].concat(this._arguments));
-      raphaelObjects = this.flattenRaphaelSets(raphaelObj);
-      layerNodes = layerNodes.concat(raphaelObjects.map( this.nodeForRaphaelObject ));
+      if (raphaelObj) {
+        raphaelObjects = this.flattenRaphaelSets(raphaelObj);
+        layerNodes = layerNodes.concat(raphaelObjects.map( this.nodeForRaphaelObject ));
+      }
     }
     
     // recursively populateCanvas in child contexts
