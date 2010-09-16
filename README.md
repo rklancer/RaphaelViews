@@ -26,13 +26,13 @@ graphics while retaining the following:
     which can be specified by the standard 'childViews' parameter and 
     rendered via the standard renderChildViews() method
 
-My intention is also to extend the standard Sproutcore CollectionView class
-with a mixin that allows RaphaelView-based exampleViews. This would allow an
-interactive scatter plot to be implemented as a CollectionView, thereby
-retaining many of the advantages of the Sproutcore collection view pattern.
+I have also extedned the Sproutcore CollectionView class with a mixin that
+allows RaphaelView-based exampleViews. This allows an interactive scatter plot
+to be implemented as a CollectionView, thereby retaining many of the
+advantages of the Sproutcore collection view pattern.
 
 Using the new CollectionViewFastPath mixin provided by Sproutcore, this
-would enable a scatter plot to continuously update with new streamed data,
+enables a scatter plot to continuously update with new streamed data,
 *without* re-rendering itself every time a point is added.
 
 
@@ -77,8 +77,8 @@ with this library long enough to know which these are, but don't expect all
 Raphaël features to be supported.
 
 This project is in a very early stage at this point. I have not yet
-implemented any tests, for example. These will be implemented soon. I am also
-implementing a simple benchmark application now.
+implemented any tests. I also use the now-deprecated render path dating from 
+Sproutcore 1.0 and 1.4; I haven't yet digested the Renderer mechanism that is part of Sproutcore 1.5, a.k.a quilmes.
 
 Currently the RaphaelContext simply provides a mechanism by which view's
 render() methods provide a callback to be executed when the DOM is ready.
@@ -103,6 +103,19 @@ during a re-render.
 
 # Installation
 
-1. Install Sproutcore if you haven't already.
-2. Copy or clone this project into the frameworks/ directory in the root of your app.
-3. Add this :raphael_views to the Buildfile of your project in the appropriate places
+NOTE: Requires the 1.5 (quilmes) branch of Sproutcore
+
+You need to copy or clone this project into the frameworks directory of your
+project. Assuming your project is a git repository, a best practice is to set up the framework a git submodule, as follows:
+
+1. Make the frameworks directory in the root of your project, if it doesn't
+already exist: `mkdir my_project/frameworks`
+2. Add RaphaelViews as a git submodule: `cd my_project; git submodule add git://github.com/rklancer/RaphaelViews.git frameworks/raphael_views'
+3. When you init the submodules, be sure to use `--recursive`, because RaphaelViews itself includes RaphaelJS as a submodule: `git submodule --init --recursive`
+
+Alternately, you can just checkout RaphaelViews into your frameworks directory, and update its submodules:
+
+1. `cd my_project/frameworks'
+2. `git checkout git://github.com/rklancer/RaphaelViews.git raphael_views`
+3. `cd raphael_views`
+4. `git submodule update --init`
