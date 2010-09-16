@@ -1,7 +1,9 @@
 =============================================================================
 
 Project:   RaphaelViews
+
 Copyright: ©2010 Richard Klancer and Concord Consortium
+
 Licensed under the MIT license. See file 'license.js'
 
 =============================================================================
@@ -26,9 +28,9 @@ graphics while retaining the following:
     which can be specified by the standard 'childViews' parameter and 
     rendered via the standard renderChildViews() method
 
-I have also extedned the Sproutcore CollectionView class with a mixin that
-allows RaphaelView-based exampleViews. This allows an interactive scatter plot
-to be implemented as a CollectionView, thereby retaining many of the
+I have also extended the Sproutcore CollectionView class with a mixin that
+allows RaphaelViews-based exampleViews. This allows an interactive scatter
+plot to be implemented as a CollectionView, thereby retaining many of the
 advantages of the Sproutcore collection view pattern.
 
 Using the new CollectionViewFastPath mixin provided by Sproutcore, this
@@ -82,7 +84,7 @@ Sproutcore 1.0 and 1.4; I haven't yet digested the Renderer mechanism that is pa
 
 Currently the RaphaelContext simply provides a mechanism by which view's
 render() methods provide a callback to be executed when the DOM is ready.
-(RenderContext calls the callbacks in depth-first order and does some
+(RaphaelContext calls the callbacks in depth-first order and does some
 housekeeping after each callback.)
 
 This is simple, but I expect to provide RaphaelContext methods named
@@ -110,7 +112,7 @@ project. Assuming your project is a git repository, a best practice is to set up
 
 1. Make the frameworks directory in the root of your project, if it doesn't
 already exist: `mkdir my_project/frameworks`
-2. Add RaphaelViews as a git submodule: `cd my_project; git submodule add git://github.com/rklancer/RaphaelViews.git frameworks/raphael_views'
+2. Add RaphaelViews as a git submodule: `cd my_project; git submodule add git://github.com/rklancer/RaphaelViews.git frameworks/raphael_views`
 3. When you init the submodules, be sure to use `--recursive`, because RaphaelViews itself includes RaphaelJS as a submodule: `git submodule --init --recursive`
 
 Alternately, you can just checkout RaphaelViews into your frameworks directory, and update its submodules:
