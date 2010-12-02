@@ -13,7 +13,7 @@ RaphaelViews.RenderSupport = {
 
   // default behavior that we can override
   render: function (context, firstTime) {
-    this.renderChildViews(context, firstTime);
+    if (firstTime) this.renderChildViews(context, firstTime);
   },
   
   /**

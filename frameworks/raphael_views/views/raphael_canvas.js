@@ -74,7 +74,7 @@ RaphaelViews.RaphaelCanvasView = SC.View.extend(
   
   // TODO eventually we can move to the Renderer paradigm and ditch this re-statement of the pre-Quilmes render()
   render: function (context, firstTime) {
-    this.renderChildViews(context, firstTime);
+    if (firstTime) this.renderChildViews(context, firstTime);
   },
     
   renderChildViews: function (context, firstTime) {
