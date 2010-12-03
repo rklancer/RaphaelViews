@@ -29,8 +29,8 @@ RaphaelViews.RaphaelCanvasView = SC.View.extend(
   _notifyDidCreateLayer: function() {
     // notify, not just the view, but also the view renderers
     this.notifyPropertyChange('layer');
-    this._viewRenderer.attachLayer(this);
-    if (this.renderer) this.renderer.attachLayer(this);
+    //this._viewRenderer.attachLayer(this);
+    //if (this.renderer) this.renderer.attachLayer(this);
     
     this.didCreateLayer() ;
     
