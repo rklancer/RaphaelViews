@@ -55,8 +55,7 @@ RaphaelViews.RaphaelCanvasView = SC.View.extend(
   
   didCreateLayer: function () {
     var layer = this.get('layer');
-    var frame = this.get('frame');
-    var r = Raphael(layer, frame.width, frame.height);
+    var r = Raphael(layer, "100%", "100%");
     this.set('raphaelCanvas', r);
     
     if (this._preparedRaphaelContext) {
