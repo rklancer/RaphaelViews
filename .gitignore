@@ -8,3 +8,6 @@ build.sh
 build_folder/
 frameworks/sproutcore/
 frameworks/raphael_views/debug/HUDSON-inject.js
+.bundle/
+bin/
+Gemfile.lock
